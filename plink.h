@@ -2,13 +2,13 @@
  * libplink
  * An optimized and light-weight C library for reading and writing
  * plink format data
- * 
+ *
  * Author: Daniel Garrigan <daniel.garrigan@ancestry.com>
- * 
+ *
  * Based on original code from Keith Noto <knoto@ancestry.com>
- * 
+ *
  * Git: https://github.ancestry.com/DNA-Science/libplink
- * 
+ *
  *********************************************************************/
 #ifndef PLINK_H
 #define PLINK_H
