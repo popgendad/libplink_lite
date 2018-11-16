@@ -196,7 +196,9 @@ extern unsigned char *hap2uchar (plink_t *, const uint64_t, const int);
 extern char *query_reg (plink_t *, const char *);
 
 /* Query the reg data with a sample id and get a population name string back */
-extern char *query_pop (plink_t *p, const char *iid);
+extern char *query_pop (plink_t *, const char *);
+
+extern double query_cm (plink_t *, const char *);
 
 /* Get array of unsigned long integers representing binary encoding of SNPs */
 extern uint64_t *hap2ulong (plink_t *, const uint64_t, const int);
