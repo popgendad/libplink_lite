@@ -11,4 +11,4 @@ build_libs:
 
 install_libs:
   stage: install
-  script: make install
+  script: make && make install
