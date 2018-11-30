@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -O2 -fpic
 PREFIX_DIR=/usr
 H_DIR=$(PREFIX_DIR)/include/
-L_DIR=$(PREFIX_DIR)/lib/
+L_DIR=$(PREFIX_DIR)/lib64/
 SRCS=$(wildcard *.c)
 OBJS=$(patsubst %.c, %.o, $(SRCS))
 
