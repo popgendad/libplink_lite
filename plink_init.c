@@ -1,6 +1,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
-#include "plink.h"
+#include "plink_lite.h"
 
 plink_t *
 plink_init (const char *instub, const int has_reg, const int is_phased)
@@ -73,7 +73,7 @@ plink_init (const char *instub, const int has_reg, const int is_phased)
 
     /* Check if all input plink files exist */
     struct stat sinfo;
- 
+
     if (stat (bimfile, &sinfo) != 0)
     {
         fprintf (stderr, "libplink [ERROR]: cannot access bimfile %s\n", bimfile);
@@ -102,7 +102,7 @@ plink_init (const char *instub, const int has_reg, const int is_phased)
         fputs ("libplink [ERROR]: problem reading bim file", stderr);
         return NULL;
     }
-    
+
     /* Index the bim data set */
     p->bim_index = bim_index (p->bim, nsnp);
     if (p->bim_index == NULL)
@@ -110,7 +110,7 @@ plink_init (const char *instub, const int has_reg, const int is_phased)
         fputs ("libplink [ERROR]: problem indexing bim file", stderr);
         return NULL;
     }
- 
+
     /* Read the sample data from the fam file */
     p->fam = fam_read (famfile, &nsam);
     if (p->fam == NULL)

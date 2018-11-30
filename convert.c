@@ -1,4 +1,4 @@
-#include "plink.h"
+#include "plink_lite.h"
 
 
 unsigned char *
@@ -7,7 +7,7 @@ hap2uchar (plink_t *p, const uint64_t i, const int parent)
 	size_t j;
 	unsigned char *str;
 
-    /* Allocate heap memory for data array */   
+    /* Allocate heap memory for data array */
     str = (unsigned char *) malloc (p->nsnp * sizeof(unsigned char));
     if (str == NULL)
     {

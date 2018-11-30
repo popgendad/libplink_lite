@@ -6,17 +6,17 @@ L_DIR=$(PREFIX_DIR)/lib/
 SRCS=$(wildcard *.c)
 OBJS=$(patsubst %.c, %.o, $(SRCS))
 
-all: libplink.so
+all: libplink_lite.so
 
-libplink.so: $(OBJS)
+libplink_lite.so: $(OBJS)
 	gcc -shared -o $@ $^
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 
 install:
-	cp libplink.so ${L_DIR}
-	cp plink.h ${H_DIR}
+	cp libplink_lite.so ${L_DIR}
+	cp plink_lite.h ${H_DIR}
 
 clean:
-	rm -f $(OBJS) libplink.so
+	rm -f $(OBJS) libplink_lite.so

@@ -1,4 +1,4 @@
-#include "plink.h"
+#include "plink_lite.h"
 
 
 reg_t *

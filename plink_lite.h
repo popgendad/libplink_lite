@@ -1,5 +1,5 @@
 /*********************************************************************
- * libplink
+ * libplink_lite
  * An optimized and light-weight C library for reading and writing
  * plink format data
  *
@@ -7,7 +7,7 @@
  *
  * Based on original code from Keith Noto <knoto@ancestry.com>
  *
- * Git: https://github.ancestry.com/DNA-Science/libplink
+ * Git: https://github.ancestry.com/DNA-Science/libplink-lite
  *
  *********************************************************************/
 #ifndef PLINK_H
@@ -98,7 +98,7 @@ typedef struct _reg_t
     char *sex;
     char *phe;
     char *pop;
-    char *reg; 
+    char *reg;
 } reg_t;
 
 /* Binary genotype data and associated functionality */

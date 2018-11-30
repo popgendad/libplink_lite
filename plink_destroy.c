@@ -1,4 +1,4 @@
-#include "plink.h"
+#include "plink_lite.h"
 
 void
 plink_destroy (plink_t *p)

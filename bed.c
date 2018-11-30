@@ -1,4 +1,4 @@
-#include "plink.h"
+#include "plink_lite.h"
 
 bed_t *
 bed_read (const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data)

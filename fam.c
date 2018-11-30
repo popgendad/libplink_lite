@@ -1,4 +1,4 @@
-#include "plink.h"
+#include "plink_lite.h"
 
 fam_t *
 fam_read (const char *famfile, size_t *nl)

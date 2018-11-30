@@ -1,4 +1,4 @@
-# libplink
+# libplink-lite
 
 An optimized and light-weight C library for reading and writing plink format data
 
@@ -7,20 +7,19 @@ An optimized and light-weight C library for reading and writing plink format dat
 First clone the git repository
 
 ```
-git clone https://github.ancestry.com/dgarrigan/libplink.git
+git clone https://github.ancestry.com/dgarrigan/libplink-lite.git
 ```
 
 Then change directory and use the Makefile provided
 
 ```
-cd libplink; make all
+cd libplink-lite; make all
 ```
 
-This will create a static library file `libplink.a`, which can be linked when you build your executable.
-Included in the distribution is an example program that uses the libplink API. To build this program, type
+This will create a share library file `libplink_lite.so`, which can be linked when you build your executable. Included in the distribution is an example program that uses the libplink-lite API. To build this program, type
 
 ```
-gcc -Wall -O2 -L. -o test-api test-api.c -lplink
+gcc -Wall -O2 -L. -o test-api test-api.c -lplink_lite
 ```
 
 to create the executable `test-api`.

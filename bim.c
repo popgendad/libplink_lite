@@ -1,4 +1,4 @@
-#include "plink.h"
+#include "plink_lite.h"
 
 /* Unknown allele value in .bim file */
 const char UNKNOWN_VARIANT = '0';
@@ -49,7 +49,7 @@ bim_read (const char *bimfile, size_t *nl)
 
         /* Define index position */
         i = lines_read - 1;
-   
+
         /* Parse tokens */
         token = strtok (line, delim);
         if (strcmp (token, "X") == 0)

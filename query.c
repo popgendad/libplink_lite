@@ -1,4 +1,4 @@
-#include "plink.h"
+#include "plink_lite.h"
 
 char *
 query_reg (plink_t *p, const char *iid)
