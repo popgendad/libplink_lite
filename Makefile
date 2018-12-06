@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -O2 -fpic
 PREFIX_DIR=/usr
 H_DIR=$(PREFIX_DIR)/include/
-L_DIR=$(PREFIX_DIR)/lib64/
+L_DIR=$(shell if [ -f "/etc/redhat-release" ]; then echo "/usr/lib64/"; elif [ -f "/etc/debian_version" ]; then echo "/usr/lib/"; fi)
 SRCS=$(wildcard *.c)
 OBJS=$(patsubst %.c, %.o, $(SRCS))
 
