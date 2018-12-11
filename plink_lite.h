@@ -223,18 +223,36 @@ get_encoding (const unsigned char *data, uint64_t record_size, uint64_t major, u
     return (data[major * record_size + minor / 4] >> 2 * (minor % 4)) & 3;
 }
 
+/* update the encoding with a new two-bit value (e.g., BED_HOMOZYGOUS_0) */
+static inline void
+set_encoding (unsigned char *data, uint64_t record_size, uint64_t major, uint64_t minor, const unsigned  char genotype);
+{
+    const size_t index = major * record_size + minor / 4;
+    const geno_t value = data[index];
+    const geno_t mask = ~( 0x3 << 2 * (minor % 4));
+    data[index] = (g << 2 * (minor % 4)) | (value & mask);
+}
+
+/* Set unphased genotype */
+static inline void
+set_genotype (bed_t *bed, uint64_t i, uint64_t m, unsigned char gentoype)
+{
+    set_encoding(bed->data, bed->record_size, bed->orientation ? m : i, bed->orientation ? i : m, genotype);
+    return;
+}
+
 /* Get unphased genotype */
 static inline unsigned char
-genotype (bed_t *bed, uint64_t i, uint64_t m)
+get_genotype (bed_t *bed, uint64_t i, uint64_t m)
 {
     return get_encoding(bed->data, bed->record_size, bed->orientation ? m : i, bed->orientation ? i : m);
 }
 
 /* Get phased genotype */
 static inline int
-plink_haplotype (bed_t *bed, uint64_t i, uint64_t m, int parent)
+get_haplotype (bed_t *bed, uint64_t i, uint64_t m, int parent)
 {
-    return (genotype(bed, i, m) & (1 << parent)) ? 1 : 0;
+    return (get_genotype(bed, i, m) & (1 << parent)) ? 1 : 0;
 }
 
 #endif
