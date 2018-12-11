@@ -225,17 +225,17 @@ get_encoding (const unsigned char *data, uint64_t record_size, uint64_t major, u
 
 /* update the encoding with a new two-bit value (e.g., BED_HOMOZYGOUS_0) */
 static inline void
-set_encoding (unsigned char *data, uint64_t record_size, uint64_t major, uint64_t minor, const unsigned  char genotype);
+set_encoding (unsigned char *data, uint64_t record_size, uint64_t major, uint64_t minor, const unsigned  char genotype)
 {
-    const size_t index = major * record_size + minor / 4;
-    const geno_t value = data[index];
-    const geno_t mask = ~( 0x3 << 2 * (minor % 4));
-    data[index] = (g << 2 * (minor % 4)) | (value & mask);
+    const uint64_t index = major * record_size + minor / 4;
+    const unsigned char value = data[index];
+    const unsigned char mask = ~(0x3 << 2 * (minor % 4));
+    data[index] = (genotype << 2 * (minor % 4)) | (value & mask);
 }
 
 /* Set unphased genotype */
 static inline void
-set_genotype (bed_t *bed, uint64_t i, uint64_t m, unsigned char gentoype)
+set_genotype (bed_t *bed, uint64_t i, uint64_t m, unsigned char genotype)
 {
     set_encoding(bed->data, bed->record_size, bed->orientation ? m : i, bed->orientation ? i : m, genotype);
     return;

@@ -17,7 +17,7 @@ hap2uchar (plink_t *p, const uint64_t i, const int parent)
 
     /* Iterate through SNP positions */
 	for (j = 0; j < p->nsnp; ++j)
-        str[j] = (plink_haplotype (p->bed, i, j, parent)) ? '1' : '0';
+        str[j] = (get_haplotype (p->bed, i, j, parent)) ? '1' : '0';
 
 	return str;
 }
@@ -39,7 +39,7 @@ hap2str (plink_t *p, const uint64_t i, const int parent)
 
     /* Iterate through SNP positions */
     for (j = 0; j < p->nsnp; ++j)
-        str[j] = (plink_haplotype (p->bed, i, j, parent)) ? '1' : '0';
+        str[j] = (get_haplotype (p->bed, i, j, parent)) ? '1' : '0';
 
     /* Add null-terminating character at end of string */
     str[j] = '\0';
@@ -67,7 +67,7 @@ hap2ulong (plink_t *p, const uint64_t i, const int parent)
     {
         size_t k = j / 64;
         size_t m = j % 64;
-        if (plink_haplotype (p->bed, i, j, parent) == 1)
+        if (get_haplotype (p->bed, i, j, parent) == 1)
             binarray[k] |= 1 << m;
     }
 
