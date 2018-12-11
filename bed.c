@@ -78,6 +78,20 @@ bed_read (const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data
     return bed;
 }
 
+uint64_t
+bed_write (const char *bedfile, const bed_t *bed)
+{
+    size_t bw;
+    FILE *bedout;
+    bedout = fopen (bedfile, "wb");
+    fputc (bed->header1, bedout);
+    fputc (bed->header2, bedout);
+    fputc (bed->orientation, bedout);
+    bw = fwrite (bed->data, sizeof(unsigned char), bed->size, bedout);
+    fclose (bedout);
+    return (uint64_t)bw;
+}
+
 void
 bed_destroy (bed_t *bed)
 {
