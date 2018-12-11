@@ -135,7 +135,7 @@ typedef struct _plink_t
 extern bed_t * bed_read (const char *, uint64_t n_indiv, uint64_t n_snps, unsigned char *data);
 
 /* Write bed/hap to file, return number of bytes written */
-extern uint64_t bed_write (FILE *, const bed_t *);
+extern uint64_t bed_write (const char *, const bed_t *);
 
 /* Deallocate memory for bed data structure */
 extern void bed_destroy (bed_t *);
