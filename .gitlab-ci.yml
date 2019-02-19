@@ -1,4 +1,4 @@
-image: ubuntu_customlib:latest
+image: dev.evolgen.us:4567/dgarrigan/ubuntu_htslib
 
 stages:
   - build
