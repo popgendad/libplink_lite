@@ -15,14 +15,14 @@ reg_read (const char *regfile, size_t *nl)
     fin = fopen (regfile, "r");
     if (fin == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
     reg = (reg_t *) malloc (total_alloc * sizeof(reg_t));
     if (reg == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -88,7 +88,7 @@ reg_write (const char *outfile, const reg_t *reg, const size_t nl)
     fout = fopen (outfile, "w");
     if (fout == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return -1;
     }
 

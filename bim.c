@@ -18,7 +18,7 @@ bim_read (const char *bimfile, size_t *nl)
     fin = fopen (bimfile, "r");
     if (fin == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -29,7 +29,7 @@ bim_read (const char *bimfile, size_t *nl)
     bim = (bim_t *) malloc (total_alloc * sizeof(bim_t));
     if (bim == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -96,7 +96,7 @@ bim_write (const char *outfile, const bim_t *bim, const size_t nl)
     fout = fopen (outfile, "w");
     if (fout == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return -1;
     }
 
