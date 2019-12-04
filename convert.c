@@ -11,7 +11,7 @@ hap2uchar (plink_t *p, const uint64_t i, const int parent)
     str = (unsigned char *) malloc (p->nsnp * sizeof(unsigned char));
     if (str == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -33,7 +33,7 @@ hap2str (plink_t *p, const uint64_t i, const int parent)
     str = (char *) malloc (p->nsnp + 1);
     if (str == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 

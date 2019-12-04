@@ -14,7 +14,7 @@ fam_read (const char *famfile, size_t *nl)
     fin = fopen (famfile, "r");
     if (fin == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -22,7 +22,7 @@ fam_read (const char *famfile, size_t *nl)
     fam = (fam_t *) malloc (total_alloc * sizeof(fam_t));
     if (fam == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -83,7 +83,7 @@ fam_write (const char *outfile, const fam_t *fam, const size_t nl)
     fout = fopen (outfile, "w");
     if (fout == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return -1;
     }
 

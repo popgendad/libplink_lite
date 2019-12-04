@@ -10,7 +10,7 @@ bed_read (const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data
     bed = (bed_t *) malloc (sizeof(bed_t));
     if (bed == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -18,7 +18,7 @@ bed_read (const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data
     fin = fopen (bedfile, "rb");
     if (fin == NULL)
     {
-        perror ("libplink [ERROR]");
+        perror ("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -30,7 +30,7 @@ bed_read (const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data
     /* No data */
     if (feof (fin) != 0)
     {
-        fputs ("libplink [ERROR]: input bed/hap appears to be truncated\n", stderr);
+        fputs ("libplink-lite [ERROR]: input bed/hap appears to be truncated\n", stderr);
         return NULL;
     }
 
