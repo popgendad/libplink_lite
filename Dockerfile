@@ -4,7 +4,7 @@ ARG NEXT_VERSION
 
 RUN yum --disablerepo amzn2-core makecache
 
-RUN yum install --disablerepo amzn2-core -y gcc make
+RUN yum install --disablerepo amzn2-core -y gcc make htslib
 
 ADD . /libplink-lite
 
@@ -15,5 +15,5 @@ RUN cd /libplink-lite && \
     echo ${NEXT_VERSION} > VERSION && \
     cp libplink_lite.so /tmp/libplink-lite/usr/lib64/ && \
     cp plink_lite.h /tmp/libplink-lite/usr/include/ && \
-    fpm -s dir -t rpm -n libplink-lite -v ${NEXT_VERSION} -C /tmp/libplink-lite -p libplink-lite_VERSION_ARCH.rpm . && \
+    fpm -s dir -t rpm -n libplink-lite -v ${NEXT_VERSION} -C /tmp/libplink-lite -p libplink-lite_VERSION_ARCH.rpm -d htslib . && \
     mv libplink-lite*.rpm /rpms/
