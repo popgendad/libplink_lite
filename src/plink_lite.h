@@ -201,6 +201,9 @@ extern double query_cm (plink_t *, const char *);
 /* Get array of unsigned long integers representing binary encoding of SNPs */
 extern uint64_t *hap2ulong (plink_t *, const uint64_t, const int);
 
+/* Return string with lipblink-lite version number */
+extern const char *plink_version(void);
+
 
 /************************************************
  * Inline functions
