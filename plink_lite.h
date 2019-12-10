@@ -23,8 +23,6 @@
  * Pre-processor definitions
  ************************************************/
 
-#define VERSION 0.0.3-alpha
-
 /* Hash types */
 KHASH_MAP_INIT_STR(string, char *)
 KHASH_MAP_INIT_STR(integer, uint64_t)
