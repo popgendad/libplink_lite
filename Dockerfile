@@ -13,7 +13,7 @@ RUN cd /libplink-lite && \
     mkdir -p /tmp/libplink-lite/usr/lib64/ && \
     mkdir -p /tmp/libplink-lite/usr/include/ && \
     echo ${NEXT_VERSION} > VERSION && \
-    cp lipbplink_lite.a /tmp/libplink-lite/usr/lib64/ && \
+    cp libplink_lite.a /tmp/libplink-lite/usr/lib64/ && \
     cp libplink_lite.so /tmp/libplink-lite/usr/lib64/ && \
     cp src/plink_lite.h /tmp/libplink-lite/usr/include/ && \
     fpm -s dir -t rpm -n libplink-lite -v ${NEXT_VERSION} -C /tmp/libplink-lite -p libplink-lite_VERSION_ARCH.rpm -d htslib . && \
