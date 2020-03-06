@@ -6,19 +6,19 @@ An optimized and lightweight C library for reading and writing plink format data
 
 First clone the git repository
 
-```
+```bash
 git clone https://github.com/popgendad/libplink_lite
 ```
 
 Then change directory and use the Makefile provided
 
-```
+```bash
 cd libplink_lite; make all
 ```
 
 This will create a share library file `libplink_lite.so`, which can be linked when you build your executable. Included in the distribution is an example program that uses the libplink-lite API. To build this program, type
 
-```
+```bash
 gcc -Wall -O2 -L. -o test-api test-api.c -lplink_lite
 ```
 
@@ -29,7 +29,7 @@ to create the executable `test-api`.
 
 The API currently provides three basic functions to the user
 
-```
+```c
 plink_t *read_plink(const char *instub, const int has_reg, const int is_phased)
 ```
 
@@ -37,13 +37,13 @@ which reads all data from plink set into memory as a plink_t object (see below).
 needs to know if there is an associated .reg file with the plink data set and whether there the
 data are unphased (.bed) or phased (.hap).
 
-```
+```c
 char *hap2str(plink_t *p, const uint64_t i, const int parent)
 ```
 
 which retrieves one haplotype from sample *i* and returns it as a null-terminated string. The parent parameter is 0 for the first haplotype or 1 to retreive the second haplotype.
 
-```
+```c
 char *query_reg(reg_t *r, const char *iid)
 ```
 
@@ -53,7 +53,7 @@ This function queries the data loaded from a .reg file. The query term is the sa
 
 The main `plink_t` structure is defined this way
 
-```
+```c
 typedef struct _plink_t
 {
     size_t nsam;    /* Number of diploid samples */
@@ -67,7 +67,7 @@ typedef struct _plink_t
 
 Likewise, there are data structures defined for each component. The `bim_t` structure is
 
-```
+```c
 typedef struct _bim_t
 {
     int ch;           /* plink-format integer chromosome identifier */
@@ -82,7 +82,7 @@ typedef struct _bim_t
 
 The `fam_t` data structure
 
-```
+```c
 typedef struct _fam_t
 {
     char *fid;           /* Family ID */
@@ -97,7 +97,7 @@ typedef struct _fam_t
 
 The reg data structure `reg_t`
 
-```
+```c
 typedef struct _reg_t
 {
     char *fid;           /* Family ID */
@@ -114,7 +114,7 @@ typedef struct _reg_t
 
 And finally the bed/hap files, which hold all of the genotype data, type `bed_t`
 
-```
+```c
 typedef struct _bed_t
 {
     int header1;
