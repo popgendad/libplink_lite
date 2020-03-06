@@ -7,7 +7,7 @@ An optimized and light-weight C library for reading and writing plink format dat
 First clone the git repository
 
 ```
-git clone https://github.ancestry.com/dgarrigan/libplink-lite.git
+git clone https://github.com/popgendad/libplink_lite
 ```
 
 Then change directory and use the Makefile provided
