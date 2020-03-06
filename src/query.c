@@ -1,14 +1,13 @@
 #include "plink_lite.h"
 
-char *
-query_reg (plink_t *p, const char *iid)
+char *query_reg(plink_t *p, const char *iid)
 {
     if (p == NULL || iid == NULL)
         return NULL;
 
-    uint64_t i;
-    char *result;
-    khint_t k;
+    uint64_t i = 0;
+    char *result = NULL;
+    khint_t k = 0;
 
     /* Query reg hash for sample identifier */
     k = kh_get(integer, p->reg_index, iid);
@@ -17,23 +16,26 @@ query_reg (plink_t *p, const char *iid)
     if (k != kh_end(p->reg_index))
     {
         i = kh_value(p->reg_index, k);
-        result = strdup (p->reg[i].reg);
+        result = strdup(p->reg[i].reg);
         return result;
     }
     else
+    {
         return NULL;
+    }
 }
 
 
-char *
-query_pop (plink_t *p, const char *iid)
+char *query_pop(plink_t *p, const char *iid)
 {
     if (p == NULL || iid == NULL)
+    {
         return NULL;
+    }
 
-    uint64_t i;
-    char *result;
-    khint_t k;
+    uint64_t i = 0;
+    char *result = NULL;
+    khint_t k = 0;
 
     /* Query reg hash for sample identifier */
     k = kh_get(integer, p->reg_index, iid);
@@ -42,22 +44,25 @@ query_pop (plink_t *p, const char *iid)
     if (k != kh_end(p->reg_index))
     {
         i = kh_value(p->reg_index, k);
-        result = strdup (p->reg[i].pop);
+        result = strdup(p->reg[i].pop);
         return result;
     }
     else
+    {
         return NULL;
+    }
 }
 
-double
-query_cm (plink_t *p, const char *rsid)
+double query_cm(plink_t *p, const char *rsid)
 {
     if (p == NULL || rsid == NULL)
+    {
         return 0.0;
+    }
 
-    uint64_t i;
-    double result;
-    khint_t k;
+    uint64_t i = 0;
+    double result = 0.0;
+    khint_t k = 0;
 
     /* Query bim hash for rsid */
     k = kh_get(integer, p->bim_index, rsid);
@@ -70,5 +75,7 @@ query_cm (plink_t *p, const char *rsid)
         return result;
     }
     else
+    {
         return 0.0;
+    }
 }

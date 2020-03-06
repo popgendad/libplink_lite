@@ -1,28 +1,27 @@
 #include "plink_lite.h"
 
-fam_t *
-fam_read (const char *famfile, size_t *nl)
+fam_t *fam_read(const char *famfile, size_t *nl)
 {
-    size_t lines_read;
+    size_t lines_read = 0;
     size_t total_alloc = CHUNK_SIZE;
     char line[LINE_LENGTH];
     const char delim[] = " \t\n";
-    fam_t *fam;
-    FILE *fin;
+    fam_t *fam = NULL;
+    FILE *fin = NULL;
 
     /* Open fam input file stream */
-    fin = fopen (famfile, "r");
+    fin = fopen(famfile, "r");
     if (fin == NULL)
     {
-        perror ("libplink-lite [ERROR]");
+        perror("libplink-lite [ERROR]");
         return NULL;
     }
 
     /* Allocate heap memory for fam_t structure */
-    fam = (fam_t *) malloc (total_alloc * sizeof(fam_t));
+    fam = (fam_t *)malloc(total_alloc * sizeof(fam_t));
     if (fam == NULL)
     {
-        perror ("libplink-lite [ERROR]");
+        perror("libplink-lite [ERROR]");
         return NULL;
     }
 
@@ -30,42 +29,42 @@ fam_read (const char *famfile, size_t *nl)
     lines_read = 0;
 
     /* Iterate through the lines of the fam file */
-    while (fgets (line, LINE_LENGTH, fin) != NULL)
+    while (fgets(line, LINE_LENGTH, fin) != NULL)
     {
         ++lines_read;
         if (lines_read > total_alloc)
         {
             total_alloc += CHUNK_SIZE;
-            fam = (fam_t *) realloc (fam, total_alloc * sizeof(fam_t));
+            fam = (fam_t *)realloc(fam, total_alloc * sizeof(fam_t));
         }
 
         /* Parse the fam entry */
-        char *token;
-        size_t i;
+        char *token = NULL;
+        size_t i = 0;
 
         /* Define index of position */
         i = lines_read - 1;
 
         /* Parse the tokens */
-        token  = strtok (line, delim);
-        fam[i].fid = strdup (token);
-        token = strtok (NULL, delim);
-        fam[i].iid = strdup (token);
-        token = strtok (NULL, delim);
-        fam[i].pid = strdup (token);
-        token = strtok (NULL, delim);
-        fam[i].mid = strdup (token);
-        token = strtok (NULL, delim);
-        fam[i].sex = strdup (token);
-        token = strtok (NULL, delim);
-        fam[i].phe = strdup (token);
+        token  = strtok(line, delim);
+        fam[i].fid = strdup(token);
+        token = strtok(NULL, delim);
+        fam[i].iid = strdup(token);
+        token = strtok(NULL, delim);
+        fam[i].pid = strdup(token);
+        token = strtok(NULL, delim);
+        fam[i].mid = strdup(token);
+        token = strtok(NULL, delim);
+        fam[i].sex = strdup(token);
+        token = strtok(NULL, delim);
+        fam[i].phe = strdup(token);
     }
 
     /* Re-size the array holding fam data */
-    fam = (fam_t *) realloc (fam, lines_read * sizeof(fam_t));
+    fam = (fam_t *)realloc(fam, lines_read * sizeof(fam_t));
 
     /* Close the input file stream */
-    fclose (fin);
+    fclose(fin);
 
     /* Assign the number of lines read from the fam file */
     *nl = lines_read;
@@ -74,37 +73,37 @@ fam_read (const char *famfile, size_t *nl)
 }
 
 
-int
-fam_write (const char *outfile, const fam_t *fam, const size_t nl)
+int fam_write(const char *outfile, const fam_t *fam, const size_t nl)
 {
-    size_t i;
-    FILE *fout;
+    size_t i = 0;
+    FILE *fout = NULL;
 
-    fout = fopen (outfile, "w");
+    fout = fopen(outfile, "w");
     if (fout == NULL)
     {
-        perror ("libplink-lite [ERROR]");
+        perror("libplink-lite [ERROR]");
         return -1;
     }
 
     for (i = 0; i < nl; ++i)
-        fprintf (fout, "%s\t%s\t%s\t%s\t%s\t%s\n",
-                 fam[i].fid, fam[i].iid, fam[i].pid, fam[i].mid,
-                 fam[i].sex, fam[i].phe);
+    {
+        fprintf(fout, "%s\t%s\t%s\t%s\t%s\t%s\n",
+                fam[i].fid, fam[i].iid, fam[i].pid, fam[i].mid,
+                fam[i].sex, fam[i].phe);
+    }
 
-    fclose (fout);
+    fclose(fout);
 
     return 0;
 }
 
 
-khash_t(integer) *
-fam_index (const fam_t *fam, const size_t nl)
+khash_t(integer) *fam_index(const fam_t *fam, const size_t nl)
 {
-    int a;
-    size_t i;
-    khint_t k;
-    khash_t(integer) *fx;
+    int a = 0;
+    size_t i = 0;
+    khint_t k = 0;
+    khash_t(integer) *fx = NULL;
 
     /* Initialize fam hash */
     fx = kh_init(integer);
@@ -120,29 +119,40 @@ fam_index (const fam_t *fam, const size_t nl)
 }
 
 
-void
-fam_destroy (fam_t *fam, const size_t nsam)
+void fam_destroy(fam_t *fam, const size_t nsam)
 {
-    size_t i;
+    size_t i = 0;
 
     if (fam != NULL)
     {
         for (i = 0; i < nsam; ++i)
         {
             if (fam[i].fid != NULL)
-                free (fam[i].fid);
+            {
+                free(fam[i].fid);
+            }
             if (fam[i].iid != NULL)
-                free (fam[i].iid);
+            {
+                free(fam[i].iid);
+            }
             if (fam[i].pid != NULL)
-                free (fam[i].pid);
+            {
+                free(fam[i].pid);
+            }
             if (fam[i].mid != NULL)
-                free (fam[i].mid);
+            {
+                free(fam[i].mid);
+            }
             if (fam[i].sex != NULL)
-                free (fam[i].sex);
+            {
+                free(fam[i].sex);
+            }
             if (fam[i].phe != NULL)
-                free (fam[i].phe);
+            {
+                free(fam[i].phe);
+            }
         }
-        free (fam);
+        free(fam);
     }
 
     return;

@@ -130,49 +130,49 @@ typedef struct _plink_t
  ************************************************/
 
 /* Read input bed/hap file.  Use given unsigned char array or allocate a new one if argument is NULL */
-extern bed_t * bed_read (const char *, uint64_t n_indiv, uint64_t n_snps, unsigned char *data);
+extern bed_t *bed_read(const char *, uint64_t, uint64_t, unsigned char *);
 
 /* Write bed/hap to file, return number of bytes written */
-extern uint64_t bed_write (const char *, const bed_t *);
+extern uint64_t bed_write(const char *, const bed_t *);
 
 /* Deallocate memory for bed data structure */
-extern void bed_destroy (bed_t *);
+extern void bed_destroy(bed_t *);
 
 /* Read input bim file */
-extern bim_t * bim_read (const char *, size_t *);
+extern bim_t *bim_read(const char *, size_t *);
 
 /* Index a bim dataset */
-extern khash_t(integer) * bim_index (const bim_t *, const size_t);
+extern khash_t(integer) *bim_index(const bim_t *, const size_t);
 
 /* Deallocate memory for bim data structure */
-extern void bim_destroy (bim_t *, const size_t);
+extern void bim_destroy(bim_t *, const size_t);
 
 /* Write marker information to bim file */
-extern int bim_write (const char *, const bim_t *, const size_t);
+extern int bim_write(const char *, const bim_t *, const size_t);
 
 /* Read input fam file */
-extern fam_t * fam_read (const char *, size_t *);
+extern fam_t *fam_read(const char *, size_t *);
 
 /* Index a fam dataset */
-extern khash_t(integer) * fam_index (const fam_t *, const size_t);
+extern khash_t(integer) *fam_index(const fam_t *, const size_t);
 
 /* Deallocate memory for fam data structure */
-extern void fam_destroy (fam_t *, const size_t);
+extern void fam_destroy(fam_t *, const size_t);
 
 /* Write sample information to fam file */
-extern int write_fam (const char *, const fam_t *, const size_t);
+extern int write_fam(const char *, const fam_t *, const size_t);
 
 /* Read input reg file */
-extern reg_t *reg_read (const char *, size_t *);
+extern reg_t *reg_read(const char *, size_t *);
 
 /* Index a reg data set */
-extern khash_t(integer) * reg_index (const reg_t *, const size_t);
+extern khash_t(integer) *reg_index(const reg_t *, const size_t);
 
 /* Deallocate memory for reg data structure */
-extern void reg_destroy (reg_t *, const size_t);
+extern void reg_destroy(reg_t *, const size_t);
 
 /* Write region information to reg file */
-extern int reg_write (const char *, const reg_t *, const size_t);
+extern int reg_write(const char *, const reg_t *, const size_t);
 
 
 /************************************************
@@ -180,26 +180,26 @@ extern int reg_write (const char *, const reg_t *, const size_t);
  ************************************************/
 
 /* Read all data from plink set into memory */
-extern plink_t *plink_init (const char *, const int, const int);
+extern plink_t *plink_init(const char *, const int, const int);
 
 /* Deallocate memory for plink_t data structure */
-extern void plink_destroy (plink_t *);
+extern void plink_destroy(plink_t *);
 
 /* Get haplotype string */
-extern char *hap2str (plink_t *, const uint64_t, const int);
+extern char *hap2str(plink_t *, const uint64_t, const int);
 
-extern unsigned char *hap2uchar (plink_t *, const uint64_t, const int);
+extern unsigned char *hap2uchar(plink_t *, const uint64_t, const int);
 
 /* Query the reg data with a sample id and get a region name string back */
-extern char *query_reg (plink_t *, const char *);
+extern char *query_reg(plink_t *, const char *);
 
 /* Query the reg data with a sample id and get a population name string back */
-extern char *query_pop (plink_t *, const char *);
+extern char *query_pop(plink_t *, const char *);
 
-extern double query_cm (plink_t *, const char *);
+extern double query_cm(plink_t *, const char *);
 
 /* Get array of unsigned long integers representing binary encoding of SNPs */
-extern uint64_t *hap2ulong (plink_t *, const uint64_t, const int);
+extern uint64_t *hap2ulong(plink_t *, const uint64_t, const int);
 
 /* Return string with lipblink-lite version number */
 extern const char *plink_version(void);
@@ -211,22 +211,19 @@ extern const char *plink_version(void);
 
 /* Compute bed data binary record size based on number of elements in each record
  * (e.g., if using SNP-major order, this is the number of inidiviuals) */
-static inline uint64_t
-bed_record_size (int n_minor)
+static inline uint64_t bed_record_size(int n_minor)
 {
     return n_minor / 4 + ((n_minor % 4) ? 1 : 0);
 }
 
 /* retreive 2-bit encoding for the given major (e.g., marker index if we're doing SNP-major order) and minor (e.g., individual index) matrix entry */
-static inline unsigned char
-get_encoding (const unsigned char *data, uint64_t record_size, uint64_t major, uint64_t minor)
+static inline unsigned char get_encoding(const unsigned char *data, uint64_t record_size, uint64_t major, uint64_t minor)
 {
     return (data[major * record_size + minor / 4] >> 2 * (minor % 4)) & 3;
 }
 
 /* update the encoding with a new two-bit value (e.g., BED_HOMOZYGOUS_0) */
-static inline void
-set_encoding (unsigned char *data, uint64_t record_size, uint64_t major, uint64_t minor, const unsigned  char genotype)
+static inline void set_encoding(unsigned char *data, uint64_t record_size, uint64_t major, uint64_t minor, const unsigned  char genotype)
 {
     const uint64_t index = major * record_size + minor / 4;
     const unsigned char value = data[index];
@@ -235,23 +232,20 @@ set_encoding (unsigned char *data, uint64_t record_size, uint64_t major, uint64_
 }
 
 /* Set unphased genotype */
-static inline void
-set_genotype (bed_t *bed, uint64_t i, uint64_t m, unsigned char genotype)
+static inline void set_genotype(bed_t *bed, uint64_t i, uint64_t m, unsigned char genotype)
 {
     set_encoding(bed->data, bed->record_size, bed->orientation ? m : i, bed->orientation ? i : m, genotype);
     return;
 }
 
 /* Get unphased genotype */
-static inline unsigned char
-get_genotype (bed_t *bed, uint64_t i, uint64_t m)
+static inline unsigned char get_genotype(bed_t *bed, uint64_t i, uint64_t m)
 {
     return get_encoding(bed->data, bed->record_size, bed->orientation ? m : i, bed->orientation ? i : m);
 }
 
 /* Get phased genotype */
-static inline int
-get_haplotype (bed_t *bed, uint64_t i, uint64_t m, int parent)
+static inline int get_haplotype(bed_t *bed, uint64_t i, uint64_t m, int parent)
 {
     return (get_genotype(bed, i, m) & (1 << parent)) ? 1 : 0;
 }

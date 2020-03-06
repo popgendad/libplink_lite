@@ -1,36 +1,35 @@
 #include "plink_lite.h"
 
-bed_t *
-bed_read (const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data)
+bed_t *bed_read(const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data)
 {
-    bed_t *bed;
-    FILE *fin;
+    bed_t *bed = NULL;
+    FILE *fin = NULL;
 
     /* Allocate heap memory for bed_t structure */
-    bed = (bed_t *) malloc (sizeof(bed_t));
+    bed = (bed_t *)malloc(sizeof(bed_t));
     if (bed == NULL)
     {
-        perror ("libplink-lite [ERROR]");
+        perror("libplink-lite [ERROR]");
         return NULL;
     }
 
     /* Open binary input stream */
-    fin = fopen (bedfile, "rb");
+    fin = fopen(bedfile, "rb");
     if (fin == NULL)
     {
-        perror ("libplink-lite [ERROR]");
+        perror("libplink-lite [ERROR]");
         return NULL;
     }
 
     /* Read first three bytes */
-    const int h1 = fgetc (fin);
-    const int h2 = fgetc (fin);
-    const int smo = fgetc (fin);
+    const int h1 = fgetc(fin);
+    const int h2 = fgetc(fin);
+    const int smo = fgetc(fin);
 
     /* No data */
-    if (feof (fin) != 0)
+    if (feof(fin) != 0)
     {
-        fputs ("libplink-lite [ERROR]: input bed/hap appears to be truncated\n", stderr);
+        fputs("libplink-lite [ERROR]: input bed/hap appears to be truncated\n", stderr);
         return NULL;
     }
 
@@ -41,28 +40,30 @@ bed_read (const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data
     /* Allocate memory for data blob */
     if (data == NULL)
     {
-        data = (unsigned char *) malloc (expected_size * sizeof(unsigned char));
+        data = (unsigned char *)malloc(expected_size * sizeof(unsigned char));
         if (data == NULL)
+        {
             return NULL;
+        }
     }
 
     /* Read data blob into memory */
-    const size_t bytesread = fread (data, sizeof(unsigned char), expected_size, fin);
+    const size_t bytesread = fread(data, sizeof(unsigned char), expected_size, fin);
 
     /* Possibly truncated file */
     if (bytesread != expected_size)
     {
-        fputs ("Unexpected EOF reading binary data", stderr);
-        free (data);
+        fputs("Unexpected EOF reading binary data", stderr);
+        free(data);
         return NULL;
     }
 
     /* Check if we are at the end of the file */
-    fgetc (fin);
-    if (feof (fin) == 0)
+    fgetc(fin);
+    if (feof(fin) == 0)
     {
-        fputs ("Binary ped file larger than expected", stderr);
-        free (data);
+        fputs("Binary ped file larger than expected", stderr);
+        free(data);
         return NULL;
     }
 
@@ -78,27 +79,27 @@ bed_read (const char *bedfile, uint64_t nsam, uint64_t nsnp, unsigned char *data
     return bed;
 }
 
-uint64_t
-bed_write (const char *bedfile, const bed_t *bed)
+uint64_t bed_write(const char *bedfile, const bed_t *bed)
 {
     size_t bw;
     FILE *bedout;
-    bedout = fopen (bedfile, "wb");
-    fputc (bed->header1, bedout);
-    fputc (bed->header2, bedout);
-    fputc (bed->orientation, bedout);
-    bw = fwrite (bed->data, sizeof(unsigned char), bed->size, bedout);
-    fclose (bedout);
+    bedout = fopen(bedfile, "wb");
+    fputc(bed->header1, bedout);
+    fputc(bed->header2, bedout);
+    fputc(bed->orientation, bedout);
+    bw = fwrite(bed->data, sizeof(unsigned char), bed->size, bedout);
+    fclose(bedout);
     return (uint64_t)bw;
 }
 
-void
-bed_destroy (bed_t *bed)
+void bed_destroy(bed_t *bed)
 {
     if (bed != NULL)
     {
         if (bed->data != NULL)
+        {
             free (bed->data);
+        }
         free (bed);
     }
 
