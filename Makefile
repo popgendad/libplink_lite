@@ -1,8 +1,8 @@
 CC         := gcc
 VERSION    := $(shell cat VERSION)
-CFLAGS     := -Wall -O2 -D VERSION=$(VERSION)
+CFLAGS     := -Wall -O2 -DVERSION=$(VERSION)
 PREFIX_DIR := /usr
-H_DIR      := $(PREFIX_DIR)/include/
+H_DIR      := $(PREFIX_DIR)/include
 L_DIR      := $(shell if [ -f "/etc/redhat-release" ]; then echo "/usr/lib64/"; elif [ -f "/etc/debian_version" ]; then echo "/usr/lib/"; fi)
 SRCS       := $(wildcard src/*.c)
 SDIR       := build-static
